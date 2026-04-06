@@ -14,7 +14,7 @@ Date: April 2024
 import os
 import logging
 import datetime
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from model_engine import AnomalyEngine
 
@@ -64,11 +64,19 @@ class Transaction(db.Model):
 # 3. CORE WEB ROUTES
 # ==========================================
 
+# Landing Page Route
 @app.route('/')
+def landing():
+    """Renders the public application overview."""
+    return render_template('landing.html')
+
+# Main Dashboard Route
+@app.route('/dashboard')
 def index():
     """Renders the Live Monitoring Dashboard."""
     return render_template('index.html')
 
+# Audit History Route
 @app.route('/reports')
 def reports():
     """
@@ -77,6 +85,50 @@ def reports():
     """
     transactions = Transaction.query.order_by(Transaction.timestamp.desc()).limit(100).all()
     return render_template('reports.html', transactions=transactions)
+
+# Compliance Route
+@app.route('/compliance')
+def compliance():
+    # Fetch some stats for the compliance overview
+    total_flags = Transaction.query.filter_by(is_anomaly=True).count()
+    total_tx = Transaction.query.count()
+    rate = (total_flags / total_tx * 100) if total_tx > 0 else 0
+    
+    return render_template('compliance.html', total_flags=total_flags, rate=round(rate, 2))
+
+# ML SETTINGS Route
+@app.route('/settings')
+def settings():
+    # Get info from the engine
+    model_info = {
+        "iso_forest": "Active/Optimized",
+        "autoencoder": "Active/Neural",
+        "last_train": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "total_records": 2000 # Based on generate_data.py
+    }
+    return render_template('settings.html', info=model_info)
+
+@app.route('/retrain', methods=['POST'])
+def retrain():
+    try:
+        # Calls the training function we wrote in model_engine.py
+        ml_engine.train_production_models()
+        return jsonify({"status": "success", "message": "Neural Engine Retrained Successfully"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)})
+
+# Login Route
+@app.route('/login')
+def login():
+    """Renders the secure entry gateway."""
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    """Clears the user session and redirects to login."""
+    session.clear()
+    return redirect(url_for('login'))
+
 
 # ==========================================
 # 4. API ENDPOINTS (Objective II: Backend System)
@@ -141,6 +193,7 @@ def detect():
     except Exception as e:
         logger.error(f"System Error: {str(e)}")
         return jsonify({"error": "Internal Processing Error"}), 500
+
 
 # ==========================================
 # 5. APPLICATION RUNNER

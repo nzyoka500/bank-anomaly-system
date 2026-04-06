@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Sentinel | Compliance Oversight</title>
+    
+    <!-- Production Assets -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    
+    <style>
+        :root { 
+            --sidebar-width: 260px; 
+            --bank-blue: #0a2342; 
+            --bank-gold: #c6a664; 
+            --bg-light: #f0f2f5;
+        }
+        
+        body { background-color: var(--bg-light); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        
+        /* Sidebar Navigation (Matches Index) */
+        .sidebar { 
+            width: var(--sidebar-width); 
+            height: 100vh; 
+            background: var(--bank-blue); 
+            position: fixed; 
+            color: white; 
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+        
+        .sidebar-header { padding: 2rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .nav-menu { flex-grow: 1; margin-top: 1.5rem; }
+        
+        .nav-link { 
+            color: rgba(255,255,255,0.7); 
+            padding: 12px 25px; 
+            margin: 4px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover { background: rgba(255,255,255,0.05); color: white; }
+        .nav-link.active { background: var(--bank-gold); color: var(--bank-blue); font-weight: bold; }
+        
+        .logout-link { 
+            margin-top: auto; 
+            margin-bottom: 2rem; 
+            color: #ff6b6b !important; 
+            border: 1px solid rgba(255,107,107,0.2);
+        }
+
+        /* Main Content */
+        .main-content { margin-left: var(--sidebar-width); padding: 2.5rem; }
+        
+        .compliance-card { 
+            border: none; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background: white;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Dark Health Card */
+        .health-card {
+            background: var(--bank-blue);
+            color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(10, 35, 66, 0.2);
+        }
+
+        .check-item { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 1.2rem 0; 
+            border-bottom: 1px solid #f1f1f1; 
+        }
+        .check-item:last-child { border-bottom: none; }
+        
+        .form-range::-webkit-slider-thumb { background: var(--bank-gold); }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar shadow">
+        <div class="sidebar-header text-center">
+            <h4 class="fw-bold mb-0">BANK<span class="text-warning">SENTINEL</span></h4>
+            <small class="text-muted text-uppercase" style="font-size: 0.7rem; letter-spacing: 1px;">AI Security Core</small>
+        </div>
+        
+        <div class="nav-menu">
+            <a href="/" class="nav-link"><i class="fa fa-gauge-high me-3"></i> Live Monitor</a>
+            <a href="/reports" class="nav-link"><i class="fa fa-history me-3"></i> Audit History</a>
+            <a href="/compliance" class="nav-link active"><i class="fa fa-handshake-angle me-3"></i> Compliance</a>
+            <a href="/settings" class="nav-link"><i class="fa fa-gear me-3"></i> ML Settings</a>
+        </div>
+
+        <a href="#" onclick="handleLogout()" class="nav-link logout-link">
+            <i class="fa fa-right-from-bracket me-3"></i> Sign Out
+        </a>
+    </div>
+
+    <!-- Main View -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <div>
+                    <h2 class="fw-bold text-dark mb-1">Regulatory Compliance</h2>
+                    <p class="text-muted">AML Policy enforcement and autonomous system oversight</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <div class="badge bg-white text-success border px-3 py-2 d-flex align-items-center shadow-sm">
+                        <i class="fa fa-circle-check me-2"></i> POLICIES UP TO DATE
+                    </div>
+                    <button class="btn btn-dark px-4 shadow-sm" onclick="alert('Policies Saved and Synced')">
+                        <i class="fa fa-save me-2"></i> SAVE POLICY
+                    </button>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Left Column: Controls -->
+                <div class="col-md-7">
+                    <div class="compliance-card">
+                        <h5 class="fw-bold mb-4 text-dark"><i class="fa fa-sliders me-2 text-warning"></i> Detection Sensitivity</h5>
+                        <p class="small text-muted mb-4">Adjust the AI's "Contamination" threshold. Stricter settings reduce risk but increase false positive audit overhead.</p>
+                        
+                        <div class="mb-4">
+                            <label class="form-label d-flex justify-content-between small fw-bold">
+                                <span>ISOLATION FOREST CONTAMINATION</span>
+                                <span class="text-primary">3.0%</span>
+                            </label>
+                            <input type="range" class="form-range" min="1" max="10" value="3">
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label d-flex justify-content-between small fw-bold">
+                                <span>NEURAL RECONSTRUCTION ERROR</span>
+                                <span class="text-primary">1.5 MSE</span>
+                            </label>
+                            <input type="range" class="form-range" min="0" max="5" step="0.1" value="1.5">
+                        </div>
+                    </div>
+
+                    <div class="compliance-card">
+                        <h5 class="fw-bold mb-4 text-dark"><i class="fa fa-list-check me-2 text-warning"></i> AML Standards Checklist</h5>
+                        
+                        <div class="check-item">
+                            <div>
+                                <h6 class="mb-0 fw-bold">Anti-Money Laundering (AML)</h6>
+                                <small class="text-muted">Behavioral monitoring for Smurfing/Structuring</small>
+                            </div>
+                            <span class="badge bg-success rounded-pill px-3">ACTIVE</span>
+                        </div>
+                        
+                        <div class="check-item">
+                            <div>
+                                <h6 class="mb-0 fw-bold">Bank Secrecy Act (BSA)</h6>
+                                <small class="text-muted">Automatic SAR reporting trigger thresholds</small>
+                            </div>
+                            <span class="badge bg-success rounded-pill px-3">ACTIVE</span>
+                        </div>
+                        
+                        <div class="check-item">
+                            <div>
+                                <h6 class="mb-0 fw-bold">Know Your Customer (KYC)</h6>
+                                <small class="text-muted">Linking identity risk scores to AI outcomes</small>
+                            </div>
+                            <span class="badge bg-warning text-dark rounded-pill px-3">INTEGRATING</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Health -->
+                <div class="col-md-5">
+                    <div class="health-card mb-4">
+                        <h5 class="fw-bold mb-4 opacity-75 text-uppercase small" style="letter-spacing: 1px;">Compliance Health Score</h5>
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="display-3 fw-bold me-3 text-warning">94%</div>
+                            <div>
+                                <h5 class="mb-0">GRADE A</h5>
+                                <small class="opacity-50">Regulatory Compliant</small>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <div class="d-flex justify-content-between small mb-1">
+                                <span>Audit Traceability</span>
+                                <span>100%</span>
+                            </div>
+                            <div class="progress mb-3" style="height: 6px; background: rgba(255,255,255,0.1);">
+                                <div class="progress-bar bg-success" style="width: 100%"></div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between small mb-1">
+                                <span>Flag Resolution Rate</span>
+                                <span>{{ rate }}%</span>
+                            </div>
+                            <div class="progress mb-4" style="height: 6px; background: rgba(255,255,255,0.1);">
+                                <div class="progress-bar bg-warning" style="width: {{ rate }}%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="compliance-card text-center py-4">
+                        <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                            <i class="fa fa-database fa-2x text-primary"></i>
+                        </div>
+                        <h5 class="fw-bold">Forensic Ledger</h5>
+                        <p class="text-muted small px-3">Currently tracking <strong>{{ transactions|length if transactions else 0 }}</strong> immutable security logs for audit purposes.</p>
+                        <button class="btn btn-outline-dark btn-sm w-100 py-2 fw-bold">VERIFY LOG INTEGRITY</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleLogout() {
+            Swal.fire({
+                title: 'Secure Sign Out',
+                text: 'Are you sure you want to terminate this session?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, sign out',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/logout';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

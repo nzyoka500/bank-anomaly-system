@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Sentinel | AI-Driven Fraud Prevention</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        :root { --bank-blue: #0a2342; --bank-gold: #c6a664; }
+        
+        body { font-family: 'Segoe UI', sans-serif; color: #333; overflow-x: hidden; }
+
+        /* Navbar */
+        .navbar { background: white; padding: 1.2rem 2rem; border-bottom: 1px solid #eee; }
+        .navbar-brand { font-weight: 800; color: var(--bank-blue) !important; letter-spacing: 1px; }
+        .navbar-brand span { color: var(--bank-gold); }
+
+        /* Hero Section */
+        .hero { 
+            background: linear-gradient(rgba(10, 35, 66, 0.9), rgba(10, 35, 66, 0.9)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 10rem 0;
+            text-align: center;
+        }
+        .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 1.5rem; }
+        .hero p { font-size: 1.25rem; opacity: 0.8; max-width: 700px; margin: 0 auto 2.5rem; }
+
+        /* Feature Cards */
+        .feature-card {
+            border: none;
+            border-radius: 20px;
+            padding: 2.5rem;
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            height: 100%;
+        }
+        .feature-card:hover { transform: translateY(-10px); }
+        .icon-box {
+            width: 70px; height: 70px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--bank-gold);
+            font-size: 1.8rem;
+        }
+
+        .btn-gold { background: var(--bank-gold); color: var(--bank-blue); font-weight: 700; padding: 12px 30px; border-radius: 10px; border: none; text-decoration: none; }
+        .btn-gold:hover { background: white; color: var(--bank-blue); }
+
+        .section-title { font-weight: 800; color: var(--bank-blue); margin-bottom: 3rem; text-align: center; }
+        
+        .tech-tag { padding: 5px 15px; background: #e9ecef; border-radius: 20px; font-weight: 600; font-size: 0.8rem; color: var(--bank-blue); margin: 5px; display: inline-block; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">BANK<span>SENTINEL</span></a>
+            <div class="ms-auto">
+                <a href="/login" class="btn btn-gold fw-bold px-4 rounded-pill">Portal Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container">
+            <h1 class="display-3">Unusual Deposit <br> Detection System</h1>
+            <p>Integrating Hybrid Machine Learning and Deep Learning architectures to provide real-time identification of anomalous banking transactions.</p>
+            <!-- <a href="/login" class="btn btn-gold btn-lg">LAUNCH MONITORING GATEWAY</a> -->
+        </div>
+    </header>
+
+    <!-- Overview Section -->
+    <section class="py-5 bg-light">
+        <div class="container py-5">
+            <h2 class="section-title">Intelligent Security Framework</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="icon-box mx-auto"><i class="fa fa-brain"></i></div>
+                        <h4 class="fw-bold">Hybrid AI Logic</h4>
+                        <p class="text-muted">Combining Isolation Forests for outlier detection and Neural Autoencoders for complex behavioral reconstruction errors.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="icon-box mx-auto"><i class="fa fa-chart-line"></i></div>
+                        <h4 class="fw-bold">Real-Time Insight</h4>
+                        <p class="text-muted">Live visualization of transaction risk scores with millisecond-latency inference across a secure web platform.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="icon-box mx-auto"><i class="fa fa-file-shield"></i></div>
+                        <h4 class="fw-bold">Compliance Ready</h4>
+                        <p class="text-muted">Built-in historical tracking and forensic audit logs designed to align with modern AML and BSA regulatory standards.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Section -->
+    <section class="py-5">
+        <div class="container py-5 text-center">
+            <h2 class="section-title">Technical Architecture</h2>
+            <p class="text-muted mb-5 mx-auto" style="max-width: 600px;">Developed using a production-grade stack to ensure scalability, security, and precision in anomaly detection.</p>
+            <div>
+                <span class="tech-tag">Python 3.10</span>
+                <span class="tech-tag">Scikit-Learn</span>
+                <span class="tech-tag">Flask Backend</span>
+                <span class="tech-tag">Neural MLP Regressor</span>
+                <span class="tech-tag">SQLAlchemy Ledger</span>
+                <span class="tech-tag">Chart.js Visuals</span>
+                <span class="tech-tag">Isolation Forest</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark text-white text-center">
+        <div class="container">
+            <h5 class="fw-bold mb-3">BANK<span class="text-warning">SENTINEL</span></h5>
+            <p class="small opacity-50 mb-0">© 2026 Research Project. Developed for Financial Security Innovation.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

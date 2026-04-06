@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     
     <style>
         :root { 
@@ -94,7 +96,8 @@
         <div class="nav-menu">
             <a href="/" class="nav-link active"><i class="fa fa-gauge-high me-3"></i> Live Monitor</a>
             <a href="/reports" class="nav-link"><i class="fa fa-history me-3"></i> Audit History</a>
-            <a href="#" class="nav-link"><i class="fa fa-gear me-3"></i> ML Settings</a>
+            <a href="/compliance" class="nav-link"><i class="fa fa-handshake-angle me-3"></i> Compliance</a>
+            <a href="/settings" class="nav-link"><i class="fa fa-gear me-3"></i> ML Settings</a>
         </div>
 
         <a href="#" onclick="handleLogout()" class="nav-link logout-link">
@@ -291,9 +294,19 @@
         }
 
         function handleLogout() {
-            if(confirm("Confirm security session termination?")) {
-                window.location.href = "/"; // For now, redirect to home
-            }
+            Swal.fire({
+                title: 'Secure Sign Out',
+                text: 'Are you sure you want to terminate this session?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, sign out',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/logout';
+                }
+            });
         }
     </script>
 </body>
