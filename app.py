@@ -1,3 +1,8 @@
+# File: app.py
+# Description: Main Flask application for the Anomaly Detection System. 
+# This app provides routes for the home page, anomaly detection API, and reports page. 
+# It also defines a database model for tracking transactions and their anomaly status.
+
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from model_engine import AnomalyDetector
@@ -26,22 +31,31 @@ def index():
 def detect():
     data = request.json
     amount = float(data['amount'])
-    # In a real app, you'd calculate these from the current time/user history
-    features = [amount, 14, 2, 1] # Example: [Amount, Hour, Day, Frequency]
     
+    # NEW: Get real-time data for behavior analysis
+    now = datetime.datetime.now()
+    hour = now.hour
+    day = now.weekday()
+    
+    # For the prototype, we assume 1 frequency unless we query the DB
+    # (Advanced feature: count how many times this user deposited today)
+    freq = Transaction.query.filter(
+        Transaction.timestamp >= datetime.datetime.now().replace(hour=0, minute=0)
+    ).count() + 1
+
     detector = AnomalyDetector()
-    pred, score = detector.predict(features)
+    pred, score = detector.predict(amount, hour, day, freq)
     
     is_unusual = True if pred == -1 else False
     
-    # Save to DB for Objective (iv): Historical Tracking
     new_tx = Transaction(amount=amount, is_anomaly=is_unusual, anomaly_score=score)
     db.session.add(new_tx)
     db.session.commit()
     
     return jsonify({
         "status": "Flagged" if is_unusual else "Normal",
-        "score": round(score, 4)
+        "score": round(score, 4),
+        "details": f"Analyzed at hour {hour}, frequency {freq}"
     })
 
 # Reports
