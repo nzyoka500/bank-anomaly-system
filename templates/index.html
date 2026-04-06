@@ -94,7 +94,7 @@
         </div>
         
         <div class="nav-menu">
-            <a href="/" class="nav-link active"><i class="fa fa-gauge-high me-3"></i> Live Monitor</a>
+            <a href="/dashboard" class="nav-link active"><i class="fa fa-gauge-high me-3"></i> Live Monitor</a>
             <a href="/reports" class="nav-link"><i class="fa fa-history me-3"></i> Audit History</a>
             <a href="/compliance" class="nav-link"><i class="fa fa-handshake-angle me-3"></i> Compliance</a>
             <a href="/settings" class="nav-link"><i class="fa fa-gear me-3"></i> ML Settings</a>
@@ -199,7 +199,14 @@
             const btn = document.getElementById('btnCheck');
             
             const amt = amtField.value;
-            if(!amt) { alert("Please enter a valid amount."); return; }
+            if(!amt) { 
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Invalid Input',
+                    text: 'Please enter a valid amount.'
+                });
+                return; 
+            }
 
             // Loading state
             btn.disabled = true;
@@ -219,7 +226,11 @@
                 updateUI(data);
                 amtField.value = '';
             } catch (err) {
-                alert("Security Connection Error: " + err.message);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Security Connection Error',
+                    text: err.message
+                });
             } finally {
                 btn.disabled = false;
                 btnText.style.display = 'inline-block';

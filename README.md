@@ -61,15 +61,23 @@ To develop a scalable web-based application that detects and flags unusual bank 
 
 ### 1. Public Landing Page
 *Overview of the technical framework and value proposition.*
-`![Landing Page Placeholder](static/screenshots/landing.png)`
+![Landing Page](/static/screenshots/landing.png)
 
 ### 2. Live Monitor
 *The real-time analysis center with live risk trending.*
-`![Live Monitor Placeholder](static/screenshots/monitor.png)`
+![Live Monitor](/static/screenshots/dashboard.png)
 
 ### 3. Audit History
 *Searchable database of security flags and timestamps.*
-`![Audit History Placeholder](static/screenshots/audit.png)`
+![Audit History](/static/screenshots/audit.png)
+
+### 4. Compliance
+*Compliance documents and guidelines*
+![Compliance](/static/screenshots/compliance.png)
+
+### 5. Login
+*User portal authenication page*
+![User Login](/static/screenshots/login.png)
 
 
 ## Installation & Setup
