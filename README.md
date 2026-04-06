@@ -75,6 +75,10 @@ To develop a scalable web-based application that detects and flags unusual bank 
 *Compliance documents and guidelines*
 ![Compliance](/static/screenshots/compliance.png)
 
+### 5. ML Settings
+*Machine learning engine page controls*
+![Settings page](/static/screenshots/settings.png)
+
 ### 5. Login
 *User portal authenication page*
 ![User Login](/static/screenshots/login.png)
