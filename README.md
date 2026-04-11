@@ -54,7 +54,7 @@ Financial institutions across Africa face three critical security gaps:
 *Real-time analysis center with live behavioral stream and risk trending.*
 ![Live Monitor](static/screenshots/dashboard.png)
 
-### 3. Forensic Ledger (Audit History)
+### 3. Audit History
 *Searchable database of security flags and automated forensic reasons.*
 ![Audit History](static/screenshots/audit.png)
 
