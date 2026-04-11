@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  sentinel-app:
+    build: .
+    container_name: bank_sentinel_prod
+    ports:
+      - "8080:5000"
+    volumes:
+      # Syncs your local DB and models so data isn't lost on restart
+      - ./database.db:/app/database.db
+      - ./models:/app/models
+      - ./logs:/app/logs
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=spin-mobile-secure-sentinel-2024
+    restart: always

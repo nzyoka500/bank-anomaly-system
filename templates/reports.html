@@ -2,238 +2,123 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bank Sentinel | Audit History</title>
-    
-    <!-- Production Assets -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <style>
-        :root { 
-            --sidebar-width: 260px; 
-            --bank-blue: #0a2342; 
-            --bank-gold: #c6a664; 
-            --bg-light: #f0f2f5;
-        }
+        .kpi-stat { border-left: 5px solid var(--bank-gold); background: #fff; padding: 1.5rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .bg-danger-soft { background-color: rgba(220, 53, 69, 0.05) !important; }
+        .btn-outline-dark { border-color: var(--bank-blue); color: var(--bank-blue); font-weight: 600; }
+        .btn-outline-dark:hover { background: var(--bank-blue); color: #fff; }
+        .btn-outline-gold { border-color: var(--bank-gold); color: var(--bank-gold); font-weight: 600; }
+        .btn-outline-gold:hover { background: var(--bank-gold); color: #fff; }
         
-        body { background-color: var(--bg-light); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-        
-        /* Sidebar Navigation (Matches Index) */
-        .sidebar { 
-            width: var(--sidebar-width); 
-            height: 100vh; 
-            background: var(--bank-blue); 
-            position: fixed; 
-            color: white; 
-            display: flex;
-            flex-direction: column;
-            z-index: 1000;
-        }
-        
-        .sidebar-header { padding: 2rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .nav-menu { flex-grow: 1; margin-top: 1.5rem; }
-        
-        .nav-link { 
-            color: rgba(255,255,255,0.7); 
-            padding: 12px 25px; 
-            margin: 4px 15px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .nav-link:hover { background: rgba(255,255,255,0.05); color: white; }
-        .nav-link.active { background: var(--bank-gold); color: var(--bank-blue); font-weight: bold; }
-        
-        .logout-link { 
-            margin-top: auto; 
-            margin-bottom: 2rem; 
-            color: #ff6b6b !important; 
-            border: 1px solid rgba(255,107,107,0.2);
-        }
-
-        /* Main Content */
-        .main-content { margin-left: var(--sidebar-width); padding: 2.5rem; }
-        
-        .stat-card { 
-            border: none; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            background: white;
-            padding: 1.5rem;
-            transition: transform 0.3s;
-        }
-        .stat-card:hover { transform: translateY(-5px); }
-
-        /* Table Styling */
-        .audit-table-container {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        
-        .table thead { background: #f8f9fa; border-bottom: 2px solid #eee; }
-        .table th { font-size: 0.75rem; text-uppercase: uppercase; letter-spacing: 1px; color: #666; padding: 1.2rem 1rem; }
-        .table td { padding: 1.2rem 1rem; vertical-align: middle; border-bottom: 1px solid #f1f1f1; }
-        
-        .flagged-row { background-color: rgba(220, 53, 69, 0.02); }
-        .badge-reason { 
-            font-size: 0.7rem; 
-            background: #f1f1f1; 
-            padding: 4px 8px; 
-            border-radius: 4px; 
-            color: #666; 
-            display: inline-block;
-            margin-top: 4px;
-        }
-        
-        @media print {
-            .sidebar, .no-print { display: none !important; }
-            .main-content { margin-left: 0; padding: 0; }
-        }
+        .audit-table thead { background: var(--bank-blue); color: white; }
+        .audit-table th { padding: 1.2rem; font-size: 0.8rem; letter-spacing: 1px; }
+        .audit-table td { padding: 1.2rem; vertical-align: middle; }
     </style>
 </head>
 <body>
-
-    <!-- Sidebar Navigation -->
-    <div class="sidebar shadow">
+   
+     <div class="sidebar shadow">
         <div class="sidebar-header text-center">
             <h4 class="fw-bold mb-0">BANK<span class="text-warning">SENTINEL</span></h4>
-            <small class="text-muted text-uppercase" style="font-size: 0.7rem; letter-spacing: 1px;">AI Security Core</small>
+            <small class="text-muted small">AI SECURITY CORE</small>
         </div>
-        
         <div class="nav-menu">
-            <a href="/dashboard" class="nav-link"><i class="fa fa-gauge-high me-3"></i> Live Monitor</a>
+            <a href="/dashboard" class="nav-link"><i class="fa fa-gauge-high me-3"></i> Monitor</a>
             <a href="/reports" class="nav-link active"><i class="fa fa-history me-3"></i> Audit History</a>
-            <a href="/compliance" class="nav-link"><i class="fa fa-handshake-angle me-3"></i> Compliance</a>
-            <a href="/settings" class="nav-link"><i class="fa fa-gear me-3"></i> ML Settings</a>
+            <a href="/compliance" class="nav-link"><i class="fa fa-handshake me-3"></i> Compliance</a>
+            <a href="/settings" class="nav-link"><i class="fa fa-gear me-3"></i> Settings</a>
         </div>
-
-        <a href="#" onclick="handleLogout()" class="nav-link logout-link">
-            <i class="fa fa-right-from-bracket me-3"></i> Sign Out
-        </a>
+        <a href="#" onclick="handleLogout()" class="nav-link logout-link"><i class="fa fa-power-off me-3"></i> Sign Out</a>
     </div>
 
-    <!-- Main View -->
     <div class="main-content">
-        <div class="container-fluid">
-            <!-- Header -->
-            <div class="d-flex justify-content-between align-items-center mb-5 no-print">
-                <div>
-                    <h2 class="fw-bold text-dark mb-1">Transaction Audit History</h2>
-                    <p class="text-muted">Comprehensive log of AI-analyzed deposits and security flags</p>
-                </div>
-                <div class="d-flex gap-2">
-                    <button onclick="window.print()" class="btn btn-warning px-4 py-2 shadow-sm">
-                        <i class="fa fa-file-excel me-2"></i> EXPORT AUDIT
-                    </button>
-                    <button onclick="window.location.reload()" class="btn btn-white border px-3 py-2 shadow-sm bg-white">
-                        <i class="fa fa-rotate"></i>
-                    </button>
-                </div>
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <div>
+                <h2 class="fw-bold mb-1">Transaction History</h2>
+                <p class="text-muted">Forensic ledger of all analyzed deposits</p>
             </div>
+            <a href="/export_audit" class="btn btn-dark btn-lg rounded-pill px-4 shadow-sm">
+                <i class="fa fa-file-excel me-2"></i> EXPORT REPORT
+            </a>
+        </div>
 
-            <!-- KPI Row (Matches Index Summary Style) -->
-            <div class="row g-4 mb-5">
-                <div class="col-md-4">
-                    <div class="stat-card border-start border-primary border-5">
-                        <small class="text-muted text-uppercase fw-bold mb-1 d-block">Total Logs</small>
-                        <h2 class="fw-bold mb-0">{{ transactions|length }}</h2>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="stat-card border-start border-danger border-5">
-                        <small class="text-muted text-uppercase fw-bold mb-1 d-block">Security Flags</small>
-                        <h2 class="fw-bold mb-0 text-danger">
-                            {{ transactions|selectattr('is_anomaly', 'equalto', True)|list|length }}
-                        </h2>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="stat-card border-start border-warning border-5">
-                        <small class="text-muted text-uppercase fw-bold mb-1 d-block">Anomaly Rate</small>
-                        <h2 class="fw-bold mb-0">
-                            {% if transactions|length > 0 %}
-                                {{ ((transactions|selectattr('is_anomaly', 'equalto', True)|list|length / transactions|length) * 100) | round(1) }}%
-                            {% else %} 0% {% endif %}
-                        </h2>
-                    </div>
-                </div>
-            </div>
+        <div class="row g-4 mb-5">
+            <div class="col-md-4"><div class="kpi-stat border-primary"><h6>TOTAL ANALYZED</h6><h2 class="fw-bold">{{ total }}</h2></div></div>
+            <div class="col-md-4"><div class="kpi-stat border-danger"><h6>SECURITY FLAGS</h6><h2 class="fw-bold text-danger">{{ flags }}</h2></div></div>
+            <div class="col-md-4"><div class="kpi-stat"><h6>ANOMALY RATE</h6><h2 class="fw-bold text-warning">{{ rate }}%</h2></div></div>
+        </div>
 
-            <!-- Audit Table -->
-            <div class="audit-table-container">
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th class="ps-4">Timestamp & ID</th>
-                            <th>Transaction Amount</th>
-                            <th>Risk Probability</th>
-                            <th>AI Determination</th>
-                            <th class="text-end pe-4 no-print">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for tx in transactions %}
-                        <tr class="{% if tx.is_anomaly %}flagged-row{% endif %}">
-                            <td class="ps-4">
-                                <div class="fw-bold text-dark">#{{ tx.id }}</div>
-                                <small class="text-muted">{{ tx.timestamp.strftime('%Y-%m-%d | %H:%M:%S') }}</small>
-                            </td>
-                            <td>
-                                <div class="fw-bold">${{ "%.2f"|format(tx.amount) }}</div>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="progress flex-grow-1 me-3" style="height: 6px; width: 80px;">
-                                        {% set score_percent = (tx.anomaly_score + 1) * 50 %}
-                                        <div class="progress-bar {% if tx.is_anomaly %}bg-danger{% else %}bg-success{% endif %}" 
-                                             style="width: {{ score_percent }}%"></div>
-                                    </div>
-                                    <small class="fw-bold">{{ "%.3f"|format(tx.anomaly_score) }}</small>
-                                </div>
-                            </td>
-                            <td>
-                                {% if tx.is_anomaly %}
-                                    <span class="badge bg-danger rounded-pill px-3 py-2 mb-1">FLAGGED</span><br>
-                                    <div class="badge-reason text-danger fw-bold"><i class="fa fa-warning me-1"></i> {{ tx.reasons }}</div>
-                                {% else %}
-                                    <span class="badge bg-success rounded-pill px-3 py-2 mb-1">CLEARED</span><br>
-                                    <div class="badge-reason text-muted">Behavioral Pattern Normal</div>
-                                {% endif %}
-                            </td>
-                            <td class="text-end pe-4 no-print">
-                                <button class="btn btn-sm btn-light border" title="View Details"><i class="fa fa-eye text-primary"></i></button>
-                                <button class="btn btn-sm btn-light border" title="Download Receipt"><i class="fa fa-download text-muted"></i></button>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+        <div class="sentinel-card p-0 overflow-hidden border-0 shadow-sm">
+            <table class="table table-hover audit-table mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4 text-uppercase">Timestamp</th>
+                        <th class="text-uppercase">Amount</th>
+                        <th class="text-uppercase">AI Score</th>
+                        <th class="text-uppercase">Determination</th> 
+                        <th class="text-center text-uppercase">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tx in transactions %}
+                    <tr class="{% if tx.is_anomaly %}bg-danger-soft{% endif %}">
+                        <td class="ps-4 text-muted small fw-bold">{{ tx.timestamp.strftime('%H:%M:%S | %b %d') }}</td>
+                        <td class="fw-bold text-dark">${{ "%.2f"|format(tx.amount) }}</td>
+                        <td><span class="badge bg-light text-dark border">{{ "%.4f"|format(tx.anomaly_score) }}</span></td>
+                        <td>
+                            {% if tx.is_anomaly %}
+                                <span class="badge bg-danger rounded-pill">FLAGGED</span>
+                                <div class="small text-danger mt-1 fw-bold">{{ tx.reasons }}</div>
+                            {% else %}
+                                <span class="badge bg-success opacity-75 rounded-pill">CLEARED</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-outline-dark" onclick="showDetails('{{ tx.amount }}', '{{ tx.anomaly_score }}', '{{ tx.reasons if tx.reasons else 'N/A' }}')">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                                <a href="/download_receipt/{{ tx.id }}" class="btn btn-sm btn-outline-gold">
+                                    <i class="fa fa-download"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 
     <script>
-        function handleLogout() {
+        function showDetails(amount, score, reasons) {
             Swal.fire({
-                title: 'Secure Sign Out',
-                text: 'Are you sure you want to terminate this session?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, sign out',
-                cancelButtonText: 'Cancel',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '/logout';
-                }
+                title: 'Transaction Details',
+                html: `<div class="text-start">
+                        <p><strong>Amount:</strong> $${parseFloat(amount).toFixed(2)}</p>
+                        <p><strong>Anomaly Score:</strong> ${parseFloat(score).toFixed(4)}</p>
+                        <p><strong>Description:</strong> ${reasons}</p>
+                       </div>`,
+                icon: 'info',
+                confirmButtonColor: '#0a2342'
+            });
+        }
+
+        function handleLogout() {
+            Swal.fire({ 
+                title: 'Sign Out?', 
+                text: 'Confirm secure session termination.', 
+                icon: 'warning', 
+                showCancelButton: true, 
+                confirmButtonColor: '#0a2342',
+                cancelButtonColor: '#d33'
+            }).then((r) => { 
+                if(r.isConfirmed) window.location.href='/logout'; 
             });
         }
     </script>

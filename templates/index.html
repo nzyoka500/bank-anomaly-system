@@ -2,323 +2,101 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bank Sentinel | AI Anomaly Detection</title>
-    
-    <!-- Production Assets -->
+    <title>Bank Sentinel | AI-Driven Fraud Prevention</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <style>
-        :root { 
-            --sidebar-width: 260px; 
-            --bank-blue: #0a2342; 
-            --bank-gold: #c6a664; 
-            --bg-light: #f0f2f5;
+        .hero-section {
+            background: linear-gradient(135deg, rgba(10,35,66,0.95) 0%, rgba(5,19,36,0.98) 100%), 
+                        url('/static/images/banner-img.jpg') no-repeat;
+            background-size: cover; background-position: center;
+            min-height: 90vh; display: flex; align-items: center; color: white;
         }
-        
-        body { background-color: var(--bg-light); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-        
-        /* Sidebar Navigation */
-        .sidebar { 
-            width: var(--sidebar-width); 
-            height: 100vh; 
-            background: var(--bank-blue); 
-            position: fixed; 
-            color: white; 
-            display: flex;
-            flex-direction: column;
-            z-index: 1000;
+        .navbar-glass {
+            backdrop-filter: blur(10px); background: rgba(255,255,255,0.8);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        
-        .sidebar-header { padding: 2rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        
-        .nav-menu { flex-grow: 1; margin-top: 1.5rem; }
-        
-        .nav-link { 
-            color: rgba(255,255,255,0.7); 
-            padding: 12px 25px; 
-            margin: 4px 15px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            transition: all 0.3s;
+        .tech-card {
+            border: none; border-radius: 20px; background: white; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05); transition: 0.4s;
         }
-        
-        .nav-link:hover { background: rgba(255,255,255,0.05); color: white; }
-        .nav-link.active { background: var(--bank-gold); color: var(--bank-blue); fw-bold; }
-        .nav-link.active i { color: var(--bank-blue); }
-        
-        .logout-link { 
-            margin-top: auto; 
-            margin-bottom: 2rem; 
-            color: #ff6b6b !important; 
-            border: 1px solid rgba(255,107,107,0.2);
+        .tech-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(198,166,100,0.15); }
+        .btn-premium {
+            background: var(--bank-gold); color: #fff; padding: 12px 35px;
+            border-radius: 50px; font-weight: 700; border: none; transition: 0.3s;
         }
-        .logout-link:hover { background: rgba(255,107,107,0.1) !important; }
-
-        /* Main Content */
-        .main-content { margin-left: var(--sidebar-width); padding: 2.5rem; }
-        
-        .stat-card { 
-            border: none; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            background: white;
-            padding: 1.5rem;
-        }
-        
-        /* Result Visuals */
-        .alert-animate { animation: pulse-red 2s infinite; }
-        @keyframes pulse-red { 
-            0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); } 
-            70% { box-shadow: 0 0 0 15px rgba(220, 53, 69, 0); } 
-            100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); } 
-        }
-
-        .risk-value { font-size: 2.5rem; font-weight: 700; color: var(--bank-blue); }
-        .loading-spinner { display: none; }
+        .btn-premium:hover { background: var(--bank-blue);color: #fff; box-shadow: 0 10px 20px rgba(198,166,100,0.3); }
     </style>
 </head>
 <body>
-
-    <!-- Sidebar Navigation -->
-    <div class="sidebar shadow">
-        <div class="sidebar-header text-center">
-            <h4 class="fw-bold mb-0">BANK<span class="text-warning">SENTINEL</span></h4>
-            <small class="text-muted text-uppercase" style="font-size: 0.7rem; letter-spacing: 1px;">AI Security Core</small>
-        </div>
-        
-        <div class="nav-menu">
-            <a href="/dashboard" class="nav-link active"><i class="fa fa-gauge-high me-3"></i> Live Monitor</a>
-            <a href="/reports" class="nav-link"><i class="fa fa-history me-3"></i> Audit History</a>
-            <a href="/compliance" class="nav-link"><i class="fa fa-handshake-angle me-3"></i> Compliance</a>
-            <a href="/settings" class="nav-link"><i class="fa fa-gear me-3"></i> ML Settings</a>
-        </div>
-
-        <a href="#" onclick="handleLogout()" class="nav-link logout-link">
-            <i class="fa fa-right-from-bracket me-3"></i> Sign Out
-        </a>
-    </div>
-
-    <!-- Main View -->
-    <div class="main-content">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center mb-5">
-                <div>
-                    <h2 class="fw-bold text-dark mb-1">Live Deposit Analysis</h2>
-                    <p class="text-muted">Real-time behavioral monitoring and anomaly detection</p>
-                </div>
-                <div id="status-badge" class="badge bg-success rounded-pill px-4 py-2 shadow-sm">
-                    <i class="fa fa-circle-check me-2"></i> SYSTEM SECURE
-                </div>
+    <nav class="navbar navbar-expand-lg navbar-glass sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" style="color:var(--bank-blue)" href="/">
+                BANK<span style="color:var(--bank-gold)">SENTINEL</span>
+            </a>
+            <div class="ms-auto">
+                <a href="/login" class="btn btn-premium shadow-sm">Portal Access <i class="fa fa-arrow-right ms-2"></i></a>
             </div>
+        </div>
+    </nav>
 
-            <!-- Dashboard Row -->
-            <div class="row mb-5">
-                <div class="col-md-4">
-                    <div class="stat-card h-100">
-                        <small class="text-muted text-uppercase fw-bold mb-2 d-block">Current Transaction Risk</small>
-                        <div id="current-risk" class="risk-value">0.000</div>
-                        <div id="risk-label" class="text-success fw-bold">Safe Pattern</div>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="stat-card h-100">
-                        <canvas id="riskChart" height="80"></canvas>
-                    </div>
-                </div>
+    <header class="hero-section">
+        <div class="container text-center animate__animated animate__fadeIn">
+            <h1 class="display-2 fw-bold mb-4">Securing the Future of <br><span style="color:var(--bank-gold)">FinTech in Africa</span></h1>
+            <p class="lead mb-5 opacity-75 mx-auto" style="max-width: 800px;">
+                Advanced Behavioral Anomaly Detection integrating Hybrid Machine Learning and Deep Learning architectures for real-time transaction oversight.
+            </p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="/login" class="btn btn-premium btn-lg">Get Started</a>
+                <a href="#features" class="btn btn-outline-light btn-lg rounded-pill px-5">Explore Tech</a>
             </div>
+        </div>
+    </header>
 
-            <!-- Analysis Engine Interface -->
+    <section id="features" class="py-5 bg-light">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold" style="color:var(--bank-blue)">Enterprise-Grade Protection</h2>
+                <div class="mx-auto mt-2" style="width: 50px; height: 4px; background: var(--bank-gold);"></div>
+            </div>
             <div class="row g-4">
-                <div class="col-md-5">
-                    <div class="stat-card h-100">
-                        <h5 class="fw-bold mb-4">Simulate Deposit Input</h5>
-                        <div class="mb-4">
-                            <label class="form-label text-muted small fw-bold">DEPOSIT AMOUNT (USD)</label>
-                            <div class="input-group input-group-lg">
-                                <span class="input-group-text bg-light border-end-0">$</span>
-                                <input type="number" id="amt" class="form-control bg-light border-start-0" placeholder="0.00">
-                            </div>
-                        </div>
-                        <button onclick="processDeposit()" id="btnCheck" class="btn btn-dark btn-lg w-100 py-3 shadow">
-                            <span id="btnText">EXECUTE AI SCAN</span>
-                            <span class="spinner-border spinner-border-sm loading-spinner" id="btnSpinner"></span>
-                        </button>
+                <div class="col-md-4">
+                    <div class="tech-card p-5 text-center">
+                        <div class="mb-4 text-warning"><i class="fa fa-brain fa-4x"></i></div>
+                        <h4 class="fw-bold">Hybrid AI Core</h4>
+                        <p class="text-muted">Ensemble of Isolation Forest and Neural Autoencoders for unparalleled precision.</p>
                     </div>
                 </div>
-
-                <div class="col-md-7">
-                    <div id="result-display" class="stat-card h-100 d-flex align-items-center justify-content-center text-center">
-                        <div class="opacity-50">
-                            <i class="fa fa-shield-halved fa-4x mb-3 text-primary"></i>
-                            <p class="mb-0">Awaiting incoming transaction data...</p>
-                        </div>
+                <div class="col-md-4">
+                    <div class="tech-card p-5 text-center">
+                        <div class="mb-4 text-warning"><i class="fa fa-bolt fa-4x"></i></div>
+                        <h4 class="fw-bold">Real-Time APIs</h4>
+                        <p class="text-muted">Engineered for sub-12ms inference latency to support high-frequency banking streams.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="tech-card p-5 text-center">
+                        <div class="mb-4 text-warning"><i class="fa fa-shield-halved fa-4x"></i></div>
+                        <h4 class="fw-bold">Audit Ready</h4>
+                        <p class="text-muted">Automated forensic logging compliant with CBK and international AML standards.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script>
-        // 1. Initialize Trend Chart
-        const ctx = document.getElementById('riskChart').getContext('2d');
-        const riskChart = new Chart(ctx, {
-            type: 'line',
-            data: { 
-                labels: [], 
-                datasets: [{ 
-                    label: 'Anomaly Score Trend', 
-                    data: [], 
-                    borderColor: '#c6a664', 
-                    backgroundColor: 'rgba(198, 166, 100, 0.1)',
-                    fill: true,
-                    tension: 0.4 
-                }] 
-            },
-            options: { 
-                responsive: true, 
-                plugins: { legend: { display: false } },
-                scales: { 
-                    y: { beginAtZero: false, grid: { color: '#f0f0f0' } },
-                    x: { grid: { display: false } }
-                } 
-            }
-        });
+    <!-- Section 2: Call to Action -->
+    <section class="py-5">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-4" style="color:var(--bank-blue)">Join the Sentinel Network</h2>
+            <p class="lead mb-5 opacity-75 mx-auto" style="max-width: 700px;">
+                Empower your institution with the most advanced fraud detection system tailored for the African financial ecosystem. Experience the future of secure banking today.         
+            </p>
+            <a href="/login" class="btn btn-premium btn-lg">Request a Demo</a>
+        </div>
+    </section>
 
-        // 2. Main Analysis Logic
-        async function processDeposit() {
-            const amtField = document.getElementById('amt');
-            const btnText = document.getElementById('btnText');
-            const btnSpinner = document.getElementById('btnSpinner');
-            const btn = document.getElementById('btnCheck');
-            
-            const amt = amtField.value;
-            if(!amt) { 
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Invalid Input',
-                    text: 'Please enter a valid amount.'
-                });
-                return; 
-            }
-
-            // Loading state
-            btn.disabled = true;
-            btnText.style.display = 'none';
-            btnSpinner.style.display = 'inline-block';
-
-            try {
-                const res = await fetch('/detect', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({amount: amt})
-                });
-                
-                const data = await res.json();
-                if(data.error) throw new Error(data.error);
-                
-                updateUI(data);
-                amtField.value = '';
-            } catch (err) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Security Connection Error',
-                    text: err.message
-                });
-            } finally {
-                btn.disabled = false;
-                btnText.style.display = 'inline-block';
-                btnSpinner.style.display = 'none';
-            }
-        }
-
-        // 3. Update UI Elements
-        function updateUI(data) {
-            const display = document.getElementById('result-display');
-            const statusBadge = document.getElementById('status-badge');
-            const riskValue = document.getElementById('current-risk');
-            const riskLabel = document.getElementById('risk-label');
-            
-            // Update Stats Card
-            riskValue.innerText = data.score.toFixed(3);
-            
-            // Update Chart
-            const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
-            riskChart.data.labels.push(time);
-            riskChart.data.datasets[0].data.push(data.score);
-            if(riskChart.data.labels.length > 8) { 
-                riskChart.data.labels.shift(); 
-                riskChart.data.datasets[0].data.shift(); 
-            }
-            riskChart.update();
-
-            // Handle Flagged vs Normal Presentation
-            if(data.status === 'Flagged') {
-                display.className = "stat-card h-100 bg-danger text-white alert-animate border-0";
-                display.innerHTML = `
-                    <div>
-                        <i class="fa fa-triangle-exclamation fa-5x mb-3"></i>
-                        <h2 class="fw-bold">SUSPICIOUS ACTIVITY</h2>
-                        <h5 class="opacity-90 mb-4">${data.reasons}</h5>
-                        <div class="row g-0 border-top border-white border-opacity-25 pt-3">
-                            <div class="col-6 border-end border-white border-opacity-25">
-                                <small class="d-block opacity-75">AI SCORE</small><strong>${data.score}</strong>
-                            </div>
-                            <div class="col-6">
-                                <small class="d-block opacity-75">RISK LEVEL</small><strong>CRITICAL</strong>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                statusBadge.className = "badge bg-danger rounded-pill px-4 py-2 shadow-sm";
-                statusBadge.innerHTML = `<i class="fa fa-bolt-lightning me-2"></i> CRITICAL ALERT`;
-                riskLabel.innerText = "Anomalous Behavior";
-                riskLabel.className = "text-danger fw-bold";
-            } else {
-                display.className = "stat-card h-100 bg-white border-start border-success border-5";
-                display.innerHTML = `
-                    <div class="text-success">
-                        <i class="fa fa-circle-check fa-5x mb-3"></i>
-                        <h2 class="fw-bold text-dark">CLEARED</h2>
-                        <p class="text-muted">Transaction profile matches learned history.</p>
-                        <div class="row g-0 border-top pt-3">
-                            <div class="col-6 border-end">
-                                <small class="d-block text-muted">AI SCORE</small><strong class="text-dark">${data.score}</strong>
-                            </div>
-                            <div class="col-6">
-                                <small class="d-block text-muted">RISK LEVEL</small><strong class="text-dark">LOW</strong>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                statusBadge.className = "badge bg-success rounded-pill px-4 py-2 shadow-sm";
-                statusBadge.innerHTML = `<i class="fa fa-circle-check me-2"></i> SYSTEM SECURE`;
-                riskLabel.innerText = "Safe Pattern";
-                riskLabel.className = "text-success fw-bold";
-            }
-        }
-
-        function handleLogout() {
-            Swal.fire({
-                title: 'Secure Sign Out',
-                text: 'Are you sure you want to terminate this session?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, sign out',
-                cancelButtonText: 'Cancel',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '/logout';
-                }
-            });
-        }
-    </script>
 </body>
 </html>

@@ -1,0 +1,96 @@
+2026-04-11 14:53:12,966 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-04-11 14:53:12,966 INFO: [33mPress CTRL+C to quit[0m
+2026-04-11 14:53:12,967 INFO:  * Restarting with stat
+2026-04-11 14:53:15,132 WARNING:  * Debugger is active!
+2026-04-11 14:53:15,137 INFO:  * Debugger PIN: 111-880-576
+2026-04-11 14:53:20,119 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:20] "GET /dashboard HTTP/1.1" 200 -
+2026-04-11 14:53:20,161 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:20] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:53:21,477 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:21] "GET /reports HTTP/1.1" 200 -
+2026-04-11 14:53:21,493 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:21] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:53:25,446 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:25] "GET /compliance HTTP/1.1" 200 -
+2026-04-11 14:53:25,464 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:25] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:53:29,314 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:29] "GET /settings HTTP/1.1" 200 -
+2026-04-11 14:53:29,333 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:29] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:53:31,868 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:31] "GET /compliance HTTP/1.1" 200 -
+2026-04-11 14:53:31,889 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:31] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:53:33,557 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:33] "GET /reports HTTP/1.1" 200 -
+2026-04-11 14:53:33,579 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:33] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:53:35,193 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:35] "GET /dashboard HTTP/1.1" 200 -
+2026-04-11 14:53:35,212 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:35] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:53:40,394 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:40] "[35m[1mPOST /detect HTTP/1.1[0m" 201 -
+2026-04-11 14:53:45,268 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:45] "[35m[1mPOST /detect HTTP/1.1[0m" 201 -
+2026-04-11 14:53:55,401 INFO: 127.0.0.1 - - [11/Apr/2026 14:53:55] "[35m[1mPOST /detect HTTP/1.1[0m" 201 -
+2026-04-11 14:54:05,408 INFO: 127.0.0.1 - - [11/Apr/2026 14:54:05] "[35m[1mPOST /detect HTTP/1.1[0m" 201 -
+2026-04-11 14:54:08,474 INFO: 127.0.0.1 - - [11/Apr/2026 14:54:08] "GET /reports HTTP/1.1" 200 -
+2026-04-11 14:54:08,494 INFO: 127.0.0.1 - - [11/Apr/2026 14:54:08] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:54:11,669 INFO: 127.0.0.1 - - [11/Apr/2026 14:54:11] "GET /compliance HTTP/1.1" 200 -
+2026-04-11 14:54:11,692 INFO: 127.0.0.1 - - [11/Apr/2026 14:54:11] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:54:13,923 INFO: 127.0.0.1 - - [11/Apr/2026 14:54:13] "GET /settings HTTP/1.1" 200 -
+2026-04-11 14:54:13,943 INFO: 127.0.0.1 - - [11/Apr/2026 14:54:13] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:54:15,183 INFO: 127.0.0.1 - - [11/Apr/2026 14:54:15] "GET /reports HTTP/1.1" 200 -
+2026-04-11 14:54:15,202 INFO: 127.0.0.1 - - [11/Apr/2026 14:54:15] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:54:21,184 INFO: 127.0.0.1 - - [11/Apr/2026 14:54:21] "GET /dashboard HTTP/1.1" 200 -
+2026-04-11 14:54:21,206 INFO: 127.0.0.1 - - [11/Apr/2026 14:54:21] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:54:31,811 INFO:  * Detected change in '/home/elitebook/Sarck Systems/Projects/Talia/bank-anomaly-system/app.py', reloading
+2026-04-11 14:54:32,366 INFO:  * Restarting with stat
+2026-04-11 14:54:35,823 WARNING:  * Debugger is active!
+2026-04-11 14:54:35,826 INFO:  * Debugger PIN: 111-880-576
+2026-04-11 14:54:39,547 INFO: 127.0.0.1 - - [11/Apr/2026 14:54:39] "GET /reports HTTP/1.1" 200 -
+2026-04-11 14:54:39,568 INFO: 127.0.0.1 - - [11/Apr/2026 14:54:39] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:55:27,716 INFO: 127.0.0.1 - - [11/Apr/2026 14:55:27] "GET /reports HTTP/1.1" 200 -
+2026-04-11 14:55:27,742 INFO: 127.0.0.1 - - [11/Apr/2026 14:55:27] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:56:04,762 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-04-11 14:56:04,762 INFO: [33mPress CTRL+C to quit[0m
+2026-04-11 14:56:04,763 INFO:  * Restarting with stat
+2026-04-11 14:56:07,576 WARNING:  * Debugger is active!
+2026-04-11 14:56:07,580 INFO:  * Debugger PIN: 111-880-576
+2026-04-11 14:56:07,631 INFO: 127.0.0.1 - - [11/Apr/2026 14:56:07] "GET /reports HTTP/1.1" 200 -
+2026-04-11 14:56:07,665 INFO: 127.0.0.1 - - [11/Apr/2026 14:56:07] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:56:54,520 INFO: 127.0.0.1 - - [11/Apr/2026 14:56:54] "GET /reports HTTP/1.1" 200 -
+2026-04-11 14:56:54,555 INFO: 127.0.0.1 - - [11/Apr/2026 14:56:54] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:56:57,128 INFO: 127.0.0.1 - - [11/Apr/2026 14:56:57] "GET /reports HTTP/1.1" 200 -
+2026-04-11 14:56:57,154 INFO: 127.0.0.1 - - [11/Apr/2026 14:56:57] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:57:06,705 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-04-11 14:57:06,706 INFO: [33mPress CTRL+C to quit[0m
+2026-04-11 14:57:06,708 INFO:  * Restarting with stat
+2026-04-11 14:57:09,027 WARNING:  * Debugger is active!
+2026-04-11 14:57:09,030 INFO:  * Debugger PIN: 111-880-576
+2026-04-11 14:57:09,082 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:09] "GET /reports HTTP/1.1" 200 -
+2026-04-11 14:57:09,122 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:09] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:57:17,232 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:17] "GET /dashboard HTTP/1.1" 200 -
+2026-04-11 14:57:17,249 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:17] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:57:20,454 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:20] "GET /reports HTTP/1.1" 200 -
+2026-04-11 14:57:20,477 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:20] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:57:22,263 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:22] "GET /compliance HTTP/1.1" 200 -
+2026-04-11 14:57:22,280 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:22] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:57:25,541 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:25] "GET /settings HTTP/1.1" 200 -
+2026-04-11 14:57:25,559 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:25] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:57:26,509 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:26] "GET /compliance HTTP/1.1" 200 -
+2026-04-11 14:57:26,527 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:26] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:57:46,726 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:46] "GET /dashboard HTTP/1.1" 200 -
+2026-04-11 14:57:46,746 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:46] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 14:57:52,827 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:52] "GET /reports HTTP/1.1" 200 -
+2026-04-11 14:57:52,853 INFO: 127.0.0.1 - - [11/Apr/2026 14:57:52] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 15:01:34,712 INFO: 127.0.0.1 - - [11/Apr/2026 15:01:34] "GET /compliance HTTP/1.1" 200 -
+2026-04-11 15:01:34,727 INFO: 127.0.0.1 - - [11/Apr/2026 15:01:34] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 15:01:36,652 INFO: 127.0.0.1 - - [11/Apr/2026 15:01:36] "GET /reports HTTP/1.1" 200 -
+2026-04-11 15:01:36,673 INFO: 127.0.0.1 - - [11/Apr/2026 15:01:36] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 15:01:37,407 INFO: 127.0.0.1 - - [11/Apr/2026 15:01:37] "GET /dashboard HTTP/1.1" 200 -
+2026-04-11 15:01:37,423 INFO: 127.0.0.1 - - [11/Apr/2026 15:01:37] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 15:01:39,335 INFO: 127.0.0.1 - - [11/Apr/2026 15:01:39] "GET /reports HTTP/1.1" 200 -
+2026-04-11 15:01:39,357 INFO: 127.0.0.1 - - [11/Apr/2026 15:01:39] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 15:02:52,777 INFO: 127.0.0.1 - - [11/Apr/2026 15:02:52] "GET /reports HTTP/1.1" 200 -
+2026-04-11 15:02:52,798 INFO: 127.0.0.1 - - [11/Apr/2026 15:02:52] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 15:02:54,236 INFO: 127.0.0.1 - - [11/Apr/2026 15:02:54] "GET /compliance HTTP/1.1" 200 -
+2026-04-11 15:02:54,256 INFO: 127.0.0.1 - - [11/Apr/2026 15:02:54] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 15:02:56,297 INFO: 127.0.0.1 - - [11/Apr/2026 15:02:56] "GET /compliance HTTP/1.1" 200 -
+2026-04-11 15:02:56,316 INFO: 127.0.0.1 - - [11/Apr/2026 15:02:56] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 15:03:26,686 INFO: 127.0.0.1 - - [11/Apr/2026 15:03:26] "GET /compliance HTTP/1.1" 200 -
+2026-04-11 15:03:26,709 INFO: 127.0.0.1 - - [11/Apr/2026 15:03:26] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 15:03:28,508 INFO: 127.0.0.1 - - [11/Apr/2026 15:03:28] "GET /settings HTTP/1.1" 200 -
+2026-04-11 15:03:28,525 INFO: 127.0.0.1 - - [11/Apr/2026 15:03:28] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-04-11 15:04:01,249 INFO:  * Detected change in '/home/elitebook/Sarck Systems/Projects/Talia/bank-anomaly-system/model_engine.py', reloading
+2026-04-11 15:04:01,629 INFO:  * Restarting with stat

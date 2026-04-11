@@ -1,7 +1,59 @@
-
+/* 
+* File: styles.css
+* Project: Bank Sentinel - Production Edition
+* A sleek, modern CSS stylesheet for the Bank Sentinel dashboard, designed to provide a clean and intuitive user
+* interface for monitoring and managing financial anomalies. The design focuses on usability, with a dark-themed sidebar
+* for navigation and a light-themed main content area for data visualization and insights. The stylesheet includes
+* responsive design elements to ensure a seamless experience across devices, as well as subtle animations to enhance
+* user engagement without overwhelming the interface.
+*
+*/
+/* font imports */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Reset some default styles */
 * {
     font-family: 'Poppins', sans-serif;
     font-family: "Montserrat", sans-serif;
+}
+
+/* CSS Variables */
+:root { 
+    --sidebar-width: 260px; 
+    --bank-blue: #0a2342; 
+    --bank-gold: #c6a664; 
+    --bg-light: #f0f2f5;
+    --text-dark: #2b2b2b;
+}
+
+body { background-color: var(--bg-light); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text-dark); }
+
+/* Sidebar */
+.sidebar { 
+    width: var(--sidebar-width); height: 100vh; background: var(--bank-blue); 
+    position: fixed; color: white; display: flex; flex-direction: column; z-index: 1000; 
+}
+.sidebar-header { padding: 2rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.nav-menu { flex-grow: 1; margin-top: 1.5rem; }
+.nav-link { 
+    color: rgba(255,255,255,0.7); padding: 12px 25px; margin: 4px 15px;
+    border-radius: 8px; display: flex; align-items: center; text-decoration: none; transition: 0.3s; 
+}
+.nav-link:hover { background: rgba(255,255,255,0.05); color: white; }
+.nav-link.active { background: var(--bank-gold); color: var(--bank-blue); font-weight: bold; }
+.logout-link { margin-top: auto; margin-bottom: 2rem; color: #ff6b6b !important; border: 1px solid rgba(255,107,107,0.1); }
+
+/* Layout */
+.main-content { margin-left: var(--sidebar-width); padding: 2.5rem; }
+.sentinel-card { 
+    border: none; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    background: white; padding: 1.5rem; margin-bottom: 1.5rem;
+}
+
+/* Animations */
+.pulse-red { animation: pulse-red 2s infinite; }
+@keyframes pulse-red { 
+    0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); } 
+    70% { box-shadow: 0 0 0 15px rgba(220, 53, 69, 0); } 
+    100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); } 
 }

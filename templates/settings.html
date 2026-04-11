@@ -242,19 +242,7 @@
         }
 
         function handleLogout() {
-            Swal.fire({
-                title: 'Secure Sign Out',
-                text: 'Are you sure you want to terminate this session?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, sign out',
-                cancelButtonText: 'Cancel',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '/logout';
-                }
-            });
+            Swal.fire({ title: 'Sign Out?', text: 'Confirm secure session termination.', icon: 'warning', showCancelButton: true, confirmButtonColor: '#0a2342' }).then((r) => { if(r.isConfirmed) window.location.href='/login'; });
         }
     </script>
 </body>

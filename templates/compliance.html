@@ -124,9 +124,7 @@
                     <div class="badge bg-white text-success border px-3 py-2 d-flex align-items-center shadow-sm">
                         <i class="fa fa-circle-check me-2"></i> POLICIES UP TO DATE
                     </div>
-                    <button class="btn btn-dark px-4 shadow-sm" onclick="alert('Policies Saved and Synced')">
-                        <i class="fa fa-save me-2"></i> SAVE POLICY
-                    </button>
+                     <button class="btn btn-dark w-100" onclick="Swal.fire('Policy Updated','Sensitivity settings pushed to AI core.','success')">Save Policy Changes</button>
                 </div>
             </div>
 
@@ -228,21 +226,11 @@
     </div>
 
     <script>
+       
         function handleLogout() {
-            Swal.fire({
-                title: 'Secure Sign Out',
-                text: 'Are you sure you want to terminate this session?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, sign out',
-                cancelButtonText: 'Cancel',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '/logout';
-                }
-            });
+            Swal.fire({ title: 'Sign Out?', text: 'Confirm secure session termination.', icon: 'warning', showCancelButton: true, confirmButtonColor: '#0a2342' }).then((r) => { if(r.isConfirmed) window.location.href='/login'; });
         }
+       
     </script>
 </body>
 </html>
