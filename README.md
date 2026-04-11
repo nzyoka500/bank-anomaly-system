@@ -55,7 +55,7 @@ Financial institutions across Africa face three critical security gaps:
 *Real-time analysis center with live behavioral stream and risk trending.*
 ![Live Monitor](static/screenshots/dashboard.png)
 
-### 3. Forensic Ledger (Audit History)
+### 3. Audit History
 *Searchable database of security flags with automated reasoning and receipt generation.*
 ![Audit History](static/screenshots/audit.png)
 
@@ -66,7 +66,7 @@ Financial institutions across Africa face three critical security gaps:
 
 ## Installation & Setup
 
-### 1. Traditional Virtual Environment
+### 1. Virtual Environment
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/bank-anomaly-system.git
@@ -82,7 +82,7 @@ python3 generate_data.py
 python3 app.py
 ```
 
-### 2. Modern Docker Deployment
+### 2. Docker Deployment
 ```bash
 # Build and Launch the entire stack
 docker compose up --build -d
