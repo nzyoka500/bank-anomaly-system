@@ -7,7 +7,7 @@
 [![Security](https://img.shields.io/badge/security-Talisman%20%2B%20CSP-red)](https://github.com/40874/flask-talisman)
 [![Docker](https://img.shields.io/badge/docker-ready-cyan)](https://www.docker.com/)
 
-**Bank Sentinel** is a production-grade financial security platform engineered for African FinTechs, SACCOs, and Banks. It integrates **Hybrid Machine Learning** and **Deep Learning** architectures to provide real-time identification, forensic auditing, and autonomous flagging of anomalous banking transactions.
+**Bank Sentinel** is a  financial security platform engineered for African FinTechs, SACCOs, and Banks. It integrates **Hybrid Machine Learning** and **Deep Learning** architectures to provide real-time identification, forensic auditing, and autonomous flagging of anomalous banking transactions.
 
 ## Project Goal
 To implement a production-ready AI platform that leverages hybrid machine learning to automate the real-time detection, forensic auditing, and autonomous flagging of anomalous bank deposits, reducing operational risk and manual audit overhead.
