@@ -54,17 +54,33 @@
                 </div>
             </div>
 
+            <!-- Graph and Live Feed -->
             <div class="col-md-8">
                 <div class="sentinel-card h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h6 class="fw-bold mb-0">Risk Trend</h6>
+                            <small class="text-muted">Auto-updates from live transaction stream</small>
+                        </div>
+                        <div class="calibration-panel d-flex gap-2 align-items-center flex-wrap">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text bg-light border-0">Min</span>
+                                <input id="calibMin" type="number" step="0.01" min="0" max="1" class="form-control border-0 bg-light" value="0">
+                            </div>
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text bg-light border-0">Max</span>
+                                <input id="calibMax" type="number" step="0.01" min="0" max="1" class="form-control border-0 bg-light" value="1">
+                            </div>
+                            <!-- Align buttons to the right -->
+                            <div class="ms-auto d-flex gap-2">
+                                <button onclick="applyCalibration()" class="btn btn-sm btn-dark">Apply</button>
+                                <button onclick="resetCalibration()" class="btn btn-sm btn-secondary">Reset</button>
+                            </div>
+                        </div>
+                    </div>
                     <canvas id="riskChart" height="80"></canvas>
                 </div>
             </div>
-
-            <!-- <div class="col-md-8">
-                    <div class="stat-card h-100 p-4">
-                        <canvas id="riskChart" height="80"></canvas>
-                    </div>
-                </div> -->
         </div>
 
         <div class="sentinel-card mt-4 p-0 overflow-hidden shadow-sm">
@@ -79,12 +95,24 @@
     </div>
 
     <script>
-        // Chart and UI logic from your previous file but keep the IDs the same
         const ctx = document.getElementById('riskChart').getContext('2d');
+        const calibration = { min: 0, max: 1 };
         const riskChart = new Chart(ctx, {
             type: 'line',
             data: { labels: [], datasets: [{ label: 'Anomaly Trend', data: [], borderColor: '#c6a664', tension: 0.4, fill: true, backgroundColor: 'rgba(198,166,100,0.05)' }] },
-            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { grid: { display: false } } } }
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        min: calibration.min,
+                        max: calibration.max,
+                        ticks: { stepSize: 0.2 },
+                        grid: { color: '#f2f2f2' }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
         });
 
         async function processDeposit() {
@@ -93,6 +121,26 @@
             const res = await fetch('/detect', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({amount: amt}) });
             const data = await res.json();
             updateUI(data, amt);
+        }
+
+        function applyCalibration() {
+            const minValue = parseFloat(document.getElementById('calibMin').value);
+            const maxValue = parseFloat(document.getElementById('calibMax').value);
+            if (isNaN(minValue) || isNaN(maxValue) || minValue >= maxValue) {
+                Swal.fire({ icon: 'error', title: 'Invalid range', text: 'Enter a valid minimum and maximum range where min < max.' });
+                return;
+            }
+            calibration.min = Math.max(0, minValue);
+            calibration.max = Math.max(calibration.min + 0.01, maxValue);
+            riskChart.options.scales.y.min = calibration.min;
+            riskChart.options.scales.y.max = calibration.max;
+            riskChart.update();
+        }
+
+        function resetCalibration() {
+            document.getElementById('calibMin').value = '0';
+            document.getElementById('calibMax').value = '1';
+            applyCalibration();
         }
 
         function updateUI(data, amt) {
@@ -115,6 +163,45 @@
             if(riskChart.data.labels.length > 12) { riskChart.data.labels.shift(); riskChart.data.datasets[0].data.shift(); }
             riskChart.update();
         }
+
+        async function fetchLiveTransactions() {
+            try {
+                const res = await fetch('/api/v1/recent-transactions?limit=25');
+                const transactions = await res.json();
+                
+                if (transactions.length === 0) return;
+                
+                const currentDataPoints = riskChart.data.datasets[0].data.length;
+                const newTransactions = transactions.slice(-12);
+                
+                riskChart.data.labels = newTransactions.map(() => '');
+                riskChart.data.datasets[0].data = newTransactions.map(tx => tx.score);
+                riskChart.update();
+                
+                document.getElementById('current-risk').innerText = transactions[transactions.length - 1].score.toFixed(3);
+                
+                const feed = document.getElementById('live-feed');
+                if(feed.innerHTML.includes('Awaiting')) feed.innerHTML = '';
+                
+                const latestTx = transactions[transactions.length - 1];
+                const statusClass = latestTx.status === 'Flagged' ? 'bg-danger-subtle text-danger' : 'bg-success-subtle text-success';
+                
+                if (!feed.querySelector(`[data-timestamp="${latestTx.timestamp}"]`)) {
+                    feed.insertAdjacentHTML('afterbegin', `
+                        <div class="p-3 border-bottom d-flex justify-content-between align-items-center animate__animated animate__slideInDown" data-timestamp="${latestTx.timestamp}">
+                            <div><span class="badge ${statusClass} me-3">${latestTx.status}</span><strong>$${latestTx.amount.toFixed(2)}</strong></div>
+                            <small class="text-muted">${new Date(latestTx.timestamp).toLocaleTimeString()}</small>
+                        </div>
+                    `);
+                }
+            } catch (e) {
+                console.log('Live feed unavailable', e);
+            }
+        }
+
+        // Auto-refresh every 2 seconds
+        setInterval(fetchLiveTransactions, 2000);
+        fetchLiveTransactions();
 
         function handleLogout() {
             Swal.fire({ title: 'Sign Out?', text: 'Confirm secure session termination.', icon: 'warning', showCancelButton: true, confirmButtonColor: '#0a2342' }).then((r) => { if(r.isConfirmed) window.location.href='/login'; });

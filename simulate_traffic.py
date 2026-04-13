@@ -17,8 +17,9 @@ def send_transaction(amount, acc_id):
     try:
         response = requests.post(API_URL, json=payload, headers=HEADERS)
         result = response.json()
-        status = result.get('decision', 'ERROR')
-        print(f"[SENTINEL] Account: {acc_id} | Amount: ${amount:<8} | Status: {status}")
+        status = result.get('status', 'ERROR')
+        score = result.get('score', 0)
+        print(f"[SENTINEL] Account: {acc_id} | Amount: ${amount:<8} | Status: {status:<8} | Risk Score: {score:.3f}")
     except Exception as e:
         print(f"Error: {e}")
 
