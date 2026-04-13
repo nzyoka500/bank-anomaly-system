@@ -54,6 +54,18 @@
         </div>
 
         <div class="sentinel-card p-0 overflow-hidden border-0 shadow-sm">
+            <div class="p-4 border-bottom d-flex gap-3 align-items-center">
+                <span class="text-muted fw-bold small">FILTER:</span>
+                <button class="btn btn-sm btn-outline-dark active" onclick="filterTransactions('all')" data-filter="all">
+                    <i class="fa fa-list me-2"></i> All
+                </button>
+                <button class="btn btn-sm btn-outline-dark" onclick="filterTransactions('cleared')" data-filter="cleared">
+                    <i class="fa fa-check-circle me-2"></i> Cleared
+                </button>
+                <button class="btn btn-sm btn-outline-danger" onclick="filterTransactions('flagged')" data-filter="flagged">
+                    <i class="fa fa-flag me-2"></i> Flagged
+                </button>
+            </div>
             <table class="table table-hover audit-table mb-0">
                 <thead>
                     <tr>
@@ -66,7 +78,7 @@
                 </thead>
                 <tbody>
                     {% for tx in transactions %}
-                    <tr class="{% if tx.is_anomaly %}bg-danger-soft{% endif %}">
+                    <tr class="{% if tx.is_anomaly %}bg-danger-soft{% endif %}" data-status="{% if tx.is_anomaly %}flagged{% else %}cleared{% endif %}">
                         <td class="ps-4 text-muted small fw-bold">{{ tx.timestamp.strftime('%H:%M:%S | %b %d') }}</td>
                         <td class="fw-bold text-dark">${{ "%.2f"|format(tx.amount) }}</td>
                         <td><span class="badge bg-light text-dark border">{{ "%.4f"|format(tx.anomaly_score) }}</span></td>
@@ -96,6 +108,25 @@
     </div>
 
     <script>
+        function filterTransactions(filter) {
+            const rows = document.querySelectorAll('table tbody tr');
+            const buttons = document.querySelectorAll('[data-filter]');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.closest('button').classList.add('active');
+            
+            rows.forEach(row => {
+                const status = row.getAttribute('data-status');
+                if (filter === 'all') {
+                    row.style.display = '';
+                } else if (filter === status) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
         function showDetails(amount, score, reasons) {
             Swal.fire({
                 title: 'Transaction Details',
